@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Demo</title>
+    <link rel="apple-touch-icon" href="icon/apple-touch-icon-180x180.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="style2.css" rel="stylesheet">
+    <noscript>
+      <link href="noscript.css" rel="stylesheet">
+    </noscript>
+    <script src="index.js"  defer></script>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script src="pyo/pyodide.js"></script>
+    <link rel="manifest" href="manifest.webmanifest">
+    </head>
+  
+    <body>
+    </br>
+    </br>
+    <div>Python/JS app running in the <span style="color:red">BROWSER</span></div>
+    <div>Downloads Pyodide and python libraries numpy and matplotlib</div>
+    <div>The relevant Pyodide (see packages.json) are cached</div>
+    <div>Runs WASM as a PWA - install from Chrome on PC</div>
+    </br>
+    <textarea id="output" style="width: 20%;" rows="3" disabled></textarea>
+        <script type="text/javascript">
+        output.value = "Initializing...\n";
+        async function main() {
+          let pyodide = await loadPyodide({
+          // indexURL: "https://cdn.jsdelivr.net/pyodide/v0.19.1/full/",
+        });
+        await pyodide.loadPackage(['matplotlib','numpy']).then(() => {
+          // matplotlib now available
+        });
+        output.value += "Ready!\n";
+        return pyodide;
+    }
+    let pyodideReadyPromise = main();
+    async function plotgraph() {
+             //alert("here one")
+             myStopFunction()
+             //alert("here two")
+             let pyodide = await pyodideReadyPromise;
+             //alert("here three")
+             var mu = $('#mu').val();
+             //alert("here four:" + mu)
+          //pyodide.loadPackage(['matplotlib']).then(() => {
+              pyodide.runPython(`
+              import io
+              import base64
+              import numpy as np
+              from matplotlib import pyplot as plt
+              # used for image binary
+              buffer = io.BytesIO()
+              def get_data(n):
+                  exponential_distribution = np.random.exponential(scale=1,size=n//2)
+                  skewed_normal_distribution = np.random.gamma(shape=9,scale=0.5,size=n//2)
+                  data = np.concatenate([exponential_distribution,skewed_normal_distribution])
+                  np.random.shuffle(data)
+                  return data
+
+              # create population data of size 5000
+              population = get_data(5000)
+              plt.figure(figsize=(15,6))
+              plt.subplot(1, 2, 1)
+              plt.title('None normal population')
+              n=plt.hist(population,bins=50,color='g')
+              plt.text(1,0.95*max(n[0]),'Mean: {} and Standard Deviation: {}'.format(round(population.mean(),2),round(population.std(),2)),fontsize=8,bbox=dict(facecolor='green', alpha=0.5))
+              plt.xlim((-0.1,7.1))
+              plt.ylim((0,1.1*max(n[0])))
+              plt.ylabel('Frequency')
+              plt.grid()
+              sample_size=${mu}
+              sampling_mean_distribution = [get_data(sample_size).mean() for _ in range(1000)] # There are 1000 samples each of size n = sample_size
+              # Mean of each sampling distribution of mean
+              μ_x_bar = round(np.mean(sampling_mean_distribution),2)
+              # Standard deviation of each sampling distribution of mean
+              σ_x_bar = round(np.std(sampling_mean_distribution),2)
+              plt.subplot(1, 2, 2)
+              n=plt.hist(sampling_mean_distribution,bins=10,color='r')
+              plt.text(3.2,0.9*max(n[0]),'Mean: {} and Standard Deviation: {}'.format(μ_x_bar,σ_x_bar),fontsize=8,bbox=dict(facecolor='red', alpha=0.5))
+              plt.text(3.2,0.8*max(n[0]),'Sample Size: {}'.format(sample_size),fontsize=12,bbox=dict(facecolor='red', alpha=0.5))
+              plt.title('Normal population of sampled means')
+              plt.xlim((-0.1,7.1))
+              plt.ylim((0,1.1*max(n[0])))
+              plt.ylabel('Frequency')
+              plt.grid()
+              plt.savefig(buffer, format='png')
+              buffer.seek(0)
+              b64str = base64.b64encode(buffer.read()).decode('UTF-8')
+              decoded_image = 'data:image/png;base64,' + b64str`
+              );
+              //alert("here five")
+              document.getElementById("pyplotfigure").src=pyodide.globals.get('decoded_image')
+              //alert("here six")
+          //});
+    };
+
+        </script>
+        
+        <script>
+
+        var $myText = $("#output");
+        $myText.data("value", $myText.val());
+        var myInterval = setInterval(function() {
+            var data = $myText.data("value"),
+            val = $myText.val();
+
+            if (data !== val) {
+                $myText.data("value", val);
+                $('#butty').show();
+        }
+        }, 100);
+        function myStopFunction() {
+                  clearInterval(myInterval);
+          }
+
+       </script>
+        <button class="add-button">Add to home screen</button>        <h3>Simulation of central limit theorem:</h3>
+        <h5 style="color:Tomato;">Takes 1,000 repeat samples of size below, from the population (green) and plots the histogram (red) of sample means</br>
+        Repeat simulation with different sample sizes</br>
+        <span style="color:blue">Setting number of samples to 1000, running time is still quick on desktop (generating 1,000,000 samples)</span>
+        </h5>
+        
+               <div>
+                <label for="mu">Number of samples</label>
+                <input type=number  id="mu" value=20 step=1 style="width: 50px;" />
+              </div>
+        <script>
+            $('input[type=number]').on('change', function () {
+              $(this).val(Math.min(1000, Math.max(2, $(this).val())));
+            });
+        </script>
+        </br>
+        <button onclick="plotgraph()" style="display:none" id = "butty" class="mybutton">Run</button>
+        <div id="pyplotdiv"><img id="pyplotfigure"/></div>
+        </body>
+    </html>
+

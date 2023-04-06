@@ -1,0 +1,40 @@
+html {
+  height: 100%;
+  background: white;
+}
+
+body {
+  height: inherit;
+  margin: 0;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+.add-button {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  background-color: red;
+}
+
+#butty{
+ background-color: red;
+}
+#butty1{
+ background-color: red;
+}
+@media (orientation: landscape) {
+  img {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+@media (pointer: fine) {
+    .mybutton:hover{
+        /hide {display:none !important;}
+    }
+    
+}

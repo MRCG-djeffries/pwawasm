@@ -1,0 +1,148 @@
+{
+  "info" : {
+    "arch" : "wasm32",
+    "platform" : "Emscripten-1.0"
+  },
+  "packages" : {
+    "pyparsing" : {
+      "name" : "pyparsing",
+      "version" : "3.0.7",
+      "file_name" : "pyparsing-3.0.7-py3-none-any.whl",
+      "install_dir" : "site",
+      "depends" : [],
+      "imports" : [
+        "pyparsing"
+      ]
+    },
+    "cycler" : {
+      "name" : "cycler",
+      "version" : "0.11.0",
+      "file_name" : "cycler-0.11.0-py3-none-any.whl",
+      "install_dir" : "site",
+      "depends" : [
+        "six"
+      ],
+      "imports" : [
+        "cycler"
+      ]
+    },
+    "distutils" : {
+      "name" : "distutils",
+      "version" : "1.0",
+      "file_name" : "distutils.tar",
+      "install_dir" : "lib",
+      "depends" : [],
+      "imports" : [
+        "distutils"
+      ]
+    },
+    "fonttools" : {
+      "name" : "fonttools",
+      "version" : "4.32.0",
+      "file_name" : "fonttools-4.32.0-py3-none-any.whl",
+      "install_dir" : "site",
+      "depends" : [],
+      "imports" : [
+        "fontTools"
+      ]
+    },
+    "kiwisolver" : {
+      "name" : "kiwisolver",
+      "version" : "1.4.2",
+      "file_name" : "kiwisolver-1.4.2-cp310-cp310-emscripten_wasm32.whl",
+      "install_dir" : "site",
+      "depends" : [],
+      "imports" : [
+        "kiwisolver"
+      ]
+    },
+    "matplotlib" : {
+      "name" : "matplotlib",
+      "version" : "3.5.1",
+      "file_name" : "matplotlib-3.5.1-cp310-cp310-emscripten_wasm32.whl",
+      "install_dir" : "site",
+      "depends" : [
+        "cycler",
+        "distutils",
+        "fonttools",
+        "kiwisolver",
+        "numpy",
+        "packaging",
+        "pillow",
+        "pyparsing",
+        "python-dateutil",
+        "pytz"
+      ],
+      "imports" : [
+        "matplotlib",
+        "mpl_toolkits"
+      ],
+      "unvendored_tests" : true
+    },
+    "numpy" : {
+      "name" : "numpy",
+      "version" : "1.22.3",
+      "file_name" : "numpy-1.22.3-cp310-cp310-emscripten_wasm32.whl",
+      "install_dir" : "site",
+      "depends" : [],
+      "imports" : [
+        "numpy"
+      ],
+      "unvendored_tests" : true
+    },
+    "packaging" : {
+      "name" : "packaging",
+      "version" : "21.3",
+      "file_name" : "packaging-21.3-py3-none-any.whl",
+      "install_dir" : "site",
+      "depends" : [
+        "pyparsing"
+      ],
+      "imports" : [
+        "packaging"
+      ]
+    },
+    "pillow" : {
+      "name" : "Pillow",
+      "version" : "9.1.0",
+      "file_name" : "PIL-9.1.0-cp310-cp310-emscripten_wasm32.whl",
+      "install_dir" : "site",
+      "depends" : [],
+      "imports" : [
+        "PIL"
+      ]
+    },
+    "python-dateutil" : {
+      "name" : "python-dateutil",
+      "version" : "2.8.2",
+      "file_name" : "python_dateutil-2.8.2-py2.py3-none-any.whl",
+      "install_dir" : "site",
+      "depends" : [
+        "six"
+      ],
+      "imports" : [
+        "dateutil"
+      ]
+    },
+    "pytz" : {
+      "name" : "pytz",
+      "version" : "2022.1",
+      "file_name" : "pytz-2022.1-py2.py3-none-any.whl",
+      "install_dir" : "site",
+      "depends" : [],
+      "imports" : [
+        "pytz"
+      ]
+    },
+    "six" : {
+      "name" : "six",
+      "version" : "1.16.0",
+      "file_name" : "six-1.16.0-py2.py3-none-any.whl",
+      "install_dir" : "site",
+      "depends" : [],
+      "imports" : [
+        "six"
+      ]
+    }
+  }
+}
