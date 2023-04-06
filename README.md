@@ -1,2 +1,2 @@
 # pwawasm
-Uses PWA with WASm for offline app
+Uses PWA with WASM for offline app
